@@ -1,0 +1,166 @@
+/* ==========================================================
+   CHECKOUT PAGE
+   ========================================================== */
+
+body {
+  background: #f8f3e7;
+  font-family: "Karla", sans-serif;
+}
+
+/* Page Heading */
+
+.checkout-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #18352b;
+  margin-bottom: 40px;
+}
+
+/* White Cards */
+
+.checkout-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Headings */
+
+.checkout-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #18352b;
+}
+
+/* Form Labels */
+
+.form-label {
+  font-weight: 600;
+  color: #18352b;
+}
+
+/* Inputs */
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #c99b47;
+  box-shadow: 0 0 0 0.2rem rgba(201, 155, 71, 0.2);
+}
+
+/* Order Summary */
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.summary-total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #18352b;
+}
+
+/* Buttons */
+
+.btn-checkout {
+  width: 100%;
+  background: #198754;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-checkout:hover {
+  background: #157347;
+}
+
+.btn-back {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* Mobile */
+
+@media (max-width: 991px) {
+  .checkout-card {
+    margin-bottom: 30px;
+  }
+
+  .checkout-title {
+    font-size: 2.2rem;
+  }
+}
+
+.cart-product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 0;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.cart-product:last-child {
+  border: none;
+}
+
+.cart-product-img {
+  width: 70px;
+  height: 70px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  border: 1px solid #ddd;
+}
+
+.cart-product-info {
+  flex: 1;
+
+  margin-left: 15px;
+}
+
+.cart-product-info h6 {
+  margin-bottom: 6px;
+
+  font-weight: 600;
+}
+
+.cart-product-price {
+  font-size: 18px;
+
+  font-weight: bold;
+
+  color: #198754;
+}
+
+.checkout-input {
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  transition: 0.25s;
+}
+
+.checkout-input:focus {
+  border-color: #b8860b;
+  box-shadow: 0 0 0 0.2rem rgba(184, 134, 11, 0.15);
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}

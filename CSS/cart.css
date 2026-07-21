@@ -1,0 +1,108 @@
+body {
+  background: #f6f0df;
+  font-family: "Karla", sans-serif;
+}
+
+h1 {
+  font-weight: 700;
+  color: #20352a;
+}
+
+.cart-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.cart-card:hover {
+  transform: translateY(-3px);
+}
+
+.cart-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #20352a;
+}
+
+.product-price {
+  color: #9b6b1f;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.summary-box {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 30px;
+}
+
+.checkout-btn {
+  background: #20352a;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.checkout-btn:hover {
+  background: #2c4939;
+}
+
+.continue-btn {
+  background: #d5a848;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+.continue-btn:hover {
+  background: #be9031;
+}
+
+.qty-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: #20352a;
+  color: white;
+  font-size: 20px;
+}
+
+.qty-number {
+  width: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.remove-btn {
+  margin-top: 20px;
+  color: #c0392b;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.remove-btn:hover {
+  color: #a93226;
+}
+
+.empty-cart {
+  margin-top: 20px;
+}

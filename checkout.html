@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Your Checkout </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="./CSS/checkout.css">
+
+</head>
+
+<body>
+<div class="container py-5">
+<section class="container py-5">
+
+    <h1 class="checkout-title text-center">
+        Checkout
+    </h1>
+
+    <div class="row g-4">
+
+        <!-- LEFT COLUMN -->
+        <div class="col-lg-8">
+
+            <div class="checkout-card">
+
+                <h3>Customer Details</h3>
+<form id="checkoutForm">
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">👤 Full Name</label>
+        <input
+            type="text"
+            id="customerName"
+            class="form-control checkout-input"
+            placeholder="Enter your full name"
+            required>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">📞 Phone Number</label>
+            <input
+                type="tel"
+                id="customerPhone"
+                class="form-control checkout-input"
+                placeholder="Phone Number"
+                required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">📧 Email</label>
+            <input
+                type="email"
+                id="customerEmail"
+                class="form-control checkout-input"
+                placeholder="example@email.com">
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">🏠 Address</label>
+        <textarea
+            id="customerAddress"
+            class="form-control checkout-input"
+            rows="4"
+            placeholder="House No., Street, Area"
+            required></textarea>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">🏙 City</label>
+            <input
+                type="text"
+                id="customerCity"
+                class="form-control checkout-input"
+                required>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">🌎 State</label>
+            <input
+                type="text"
+                id="customerState"
+                class="form-control checkout-input"
+                required>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">📮 PIN Code</label>
+            <input
+                type="text"
+                id="customerPin"
+                class="form-control checkout-input"
+                maxlength="6"
+                required>
+        </div>
+
+    </div>
+
+</form>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+
+        <div class="col-lg-4">
+
+            <div class="checkout-card">
+
+                <h3>Order Summary</h3>
+
+                <div id="checkoutItems">
+
+                    Loading...
+
+                </div>
+
+                <hr>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="checkoutSubtotal">
+                        ₹0
+                    </span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>
+                        FREE
+                    </span>
+                </div>
+
+                <hr>
+
+                <div class="summary-row summary-total">
+
+                    <span>Total</span>
+
+                    <span id="checkoutTotal">
+                        ₹0
+                    </span>
+
+                </div>
+
+                <button
+                    id="placeOrderBtn"
+                    class="btn-checkout mt-4">
+
+                    Place Order
+
+                </button>
+
+                <a
+                    href="cart.html"
+                    class="btn btn-outline-dark btn-back">
+
+                    Back to Cart
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="./JavaScript/checkout.js"></script>
+</body>
+
+
+</html>
