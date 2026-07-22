@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://jureddikarthik07.github.io/Ujwala-Eco-Products/sitemap.xml
