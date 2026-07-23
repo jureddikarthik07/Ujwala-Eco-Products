@@ -32,6 +32,14 @@ const observer = new IntersectionObserver(
 // 3. Tell the observer to start watching each "reveal" element
 revealEls.forEach((el) => observer.observe(el));
 
+// product.js injects cards AFTER this script has already run (it has
+// to wait for the API fetch), so any .reveal elements it adds later
+// were never handed to the observer above — they'd stay stuck at
+// opacity:0 forever. This lets product.js register new ones.
+window.observeRevealEls = function (elements) {
+  elements.forEach((el) => observer.observe(el));
+};
+
 /* ==========================================================
    AJAX FORM SUBMISSION (NO REDIRECT)
    ========================================================== */

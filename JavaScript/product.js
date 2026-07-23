@@ -159,6 +159,19 @@ function displayProducts(products) {
   if (typeof window.wireUpProductCards === "function") {
     window.wireUpProductCards();
   }
+
+  // These cards use the "reveal" fade-in-on-scroll class, but script.js's
+  // observer only ever saw the elements that existed when the page first
+  // loaded — these are new, so without this they'd sit at opacity:0
+  // forever (technically "working" but invisible).
+  if (typeof window.observeRevealEls === "function") {
+    window.observeRevealEls(container.querySelectorAll(".reveal"));
+  } else {
+    // Fallback if script.js's observer hook isn't available for some
+    // reason: just show the cards immediately instead of leaving them
+    // invisible.
+    container.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+  }
 }
 
 loadProducts();
