@@ -1,5 +1,10 @@
 console.log("cart.js loaded");
 
+// Change this one number to set shipping for the whole site — it flows
+// through to the cart page, checkout page, and the WhatsApp order
+// message automatically. Set to 0 to keep shipping free.
+const SHIPPING_COST = 49;
+
 // Get cart from localStorage
 let cart = [];
 
@@ -14,6 +19,7 @@ console.log(cart);
 const cartItems = document.getElementById("cartItems");
 const subtotal = document.getElementById("subtotal");
 const grandTotal = document.getElementById("grandTotal");
+const shippingCostEl = document.getElementById("shippingCost");
 const clearCartBtn = document.getElementById("clearCartBtn");
 const checkoutBtn = document.getElementById("checkoutBtn");
 
@@ -106,7 +112,12 @@ function renderCart() {
   });
 
   subtotal.textContent = `₹${total}`;
-  grandTotal.textContent = `₹${total}`;
+
+  if (shippingCostEl) {
+    shippingCostEl.textContent = SHIPPING_COST === 0 ? "FREE" : `₹${SHIPPING_COST}`;
+  }
+
+  grandTotal.textContent = `₹${total + SHIPPING_COST}`;
 }
 
 function saveCart() {

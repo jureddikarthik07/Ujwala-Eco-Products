@@ -1,3 +1,7 @@
+// Change this to match the same value in cart.js — keeping both in sync
+// means the amount shown on the cart page matches what's charged here.
+const SHIPPING_COST = 0;
+
 // Load cart from localStorage
 let cart = [];
 
@@ -10,6 +14,7 @@ try {
 const checkoutItems = document.getElementById("checkoutItems");
 const checkoutSubtotal = document.getElementById("checkoutSubtotal");
 const checkoutTotal = document.getElementById("checkoutTotal");
+const checkoutShippingCostEl = document.getElementById("checkoutShippingCost");
 const placeOrderBtn = document.getElementById("placeOrderBtn");
 
 function renderCheckout() {
@@ -75,7 +80,13 @@ function renderCheckout() {
   });
 
   checkoutSubtotal.textContent = `₹${total}`;
-  checkoutTotal.textContent = `₹${total}`;
+
+  if (checkoutShippingCostEl) {
+    checkoutShippingCostEl.textContent =
+      SHIPPING_COST === 0 ? "FREE" : `₹${SHIPPING_COST}`;
+  }
+
+  checkoutTotal.textContent = `₹${total + SHIPPING_COST}`;
 }
 
 renderCheckout();
@@ -180,7 +191,11 @@ Amount : ₹${amount}
 `;
   });
 
-  message += `Grand Total : ₹${total}`;
+  message += `Shipping : ${SHIPPING_COST === 0 ? "FREE" : "₹" + SHIPPING_COST}
+
+`;
+
+  message += `Grand Total : ₹${total + SHIPPING_COST}`;
 
   window.open(
     `https://wa.me/919701347838?text=${encodeURIComponent(message)}`,
@@ -192,7 +207,7 @@ Amount : ₹${amount}
     JSON.stringify({
       customer: { name, phone, email, address, city, state, pin },
       items: cart,
-      total: total,
+      total: total + SHIPPING_COST,
       date: new Date().toLocaleString("en-IN"),
     }),
   );
