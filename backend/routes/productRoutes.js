@@ -8,15 +8,17 @@ const {
     deleteProduct
 } = require("../controllers/productController");
 
+const requireApiKey = require("../middleware/requireApiKey");
+
 const router = express.Router();
 
 router.route("/")
-.post(createProduct)
+.post(requireApiKey, createProduct)
 .get(getProducts);
 
 router.route("/:id")
 .get(getProductById)
-.put(updateProduct)
-.delete(deleteProduct);
+.put(requireApiKey, updateProduct)
+.delete(requireApiKey, deleteProduct);
 
 module.exports = router;
