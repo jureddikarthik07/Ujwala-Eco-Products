@@ -81,60 +81,75 @@ if (contactForm && formStatus) {
 
 /* ==========================================================
    COLOR SWATCH SELECTION & DYNAMIC HOVER SWAP
+
+   IMPORTANT: product.js injects the product cards AFTER this
+   script has already run once (it fetches from the API, which
+   takes time). So this logic is wrapped in a function that runs
+   once now (in case any cards are already in the DOM) AND is
+   re-run by product.js every time it finishes rendering cards,
+   via window.wireUpProductCards(). A "data-wired" flag stops the
+   same card from getting duplicate listeners on re-runs.
    ========================================================== */
-document.querySelectorAll(".color-swatches").forEach((group) => {
-  const productCard = group.closest(".product-card");
-  if (!productCard) return;
+function wireUpColorSwatches() {
+  document.querySelectorAll(".color-swatches").forEach((group) => {
+    if (group.dataset.wired === "true") return; // already wired, skip
+    group.dataset.wired = "true";
 
-  const mainImage = productCard.querySelector(".main-product-img");
+    const productCard = group.closest(".product-card");
+    if (!productCard) return;
 
-  // 1. Handle clicking the color swatches
-  group.querySelectorAll(".swatch").forEach((swatch) => {
-    swatch.addEventListener("click", () => {
-      const newImageSrc = swatch.getAttribute("data-image");
+    const mainImage = productCard.querySelector(".main-product-img");
 
-      if (mainImage && newImageSrc) {
-        mainImage.src = newImageSrc;
-      }
+    // 1. Handle clicking the color swatches
+    group.querySelectorAll(".swatch").forEach((swatch) => {
+      swatch.addEventListener("click", () => {
+        const newImageSrc = swatch.getAttribute("data-image");
 
-      // Toggle active states
-      group.querySelectorAll(".swatch").forEach((s) => {
-        s.classList.remove("active");
-        s.setAttribute("aria-pressed", "false");
+        if (mainImage && newImageSrc) {
+          mainImage.src = newImageSrc;
+        }
+
+        // Toggle active states
+        group.querySelectorAll(".swatch").forEach((s) => {
+          s.classList.remove("active");
+          s.setAttribute("aria-pressed", "false");
+        });
+        swatch.classList.add("active");
+        swatch.setAttribute("aria-pressed", "true");
       });
-      swatch.classList.add("active");
-      swatch.setAttribute("aria-pressed", "true");
     });
+
+    // 2. Handle hovering strictly on the image area
+    const imageContainer = productCard.querySelector(".product-image-swap");
+    if (imageContainer && mainImage) {
+      // When mouse enters the image area
+      imageContainer.addEventListener("mouseenter", () => {
+        const activeSwatch = group.querySelector(".swatch.active");
+        const hoverImageSrc = activeSwatch
+          ? activeSwatch.getAttribute("data-hover")
+          : null;
+
+        if (hoverImageSrc) {
+          mainImage.src = hoverImageSrc;
+        }
+      });
+
+      // When mouse leaves the image area
+      imageContainer.addEventListener("mouseleave", () => {
+        const activeSwatch = group.querySelector(".swatch.active");
+        const defaultImageSrc = activeSwatch
+          ? activeSwatch.getAttribute("data-image")
+          : null;
+
+        if (defaultImageSrc) {
+          mainImage.src = defaultImageSrc;
+        }
+      });
+    }
   });
+}
 
-  // 2. Handle hovering strictly on the image area
-  const imageContainer = productCard.querySelector(".product-image-swap");
-  if (imageContainer && mainImage) {
-    // When mouse enters the image area
-    imageContainer.addEventListener("mouseenter", () => {
-      const activeSwatch = group.querySelector(".swatch.active");
-      const hoverImageSrc = activeSwatch
-        ? activeSwatch.getAttribute("data-hover")
-        : null;
-
-      if (hoverImageSrc) {
-        mainImage.src = hoverImageSrc;
-      }
-    });
-
-    // When mouse leaves the image area
-    imageContainer.addEventListener("mouseleave", () => {
-      const activeSwatch = group.querySelector(".swatch.active");
-      const defaultImageSrc = activeSwatch
-        ? activeSwatch.getAttribute("data-image")
-        : null;
-
-      if (defaultImageSrc) {
-        mainImage.src = defaultImageSrc;
-      }
-    });
-  }
-});
+wireUpColorSwatches();
 
 /* ==========================================================
    LANGUAGE SWITCHER
@@ -375,21 +390,24 @@ if (checkoutPayBtn) {
 
 const searchInput = document.getElementById("searchProduct");
 const filterBtns = document.querySelectorAll(".filter-btn");
-const productCards = document.querySelectorAll("#products .product-card");
 const noResultsMsg = document.getElementById("noResultsMsg");
 
 let activeCategory = "all";
 
 function applyProductFilter() {
+  // Queried fresh every time (not cached) because product.js loads
+  // cards asynchronously — a cached NodeList from page-load would
+  // always be empty and make search/filter look broken.
+  const productCards = document.querySelectorAll("#products .product-card");
   const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
   let visibleCount = 0;
 
   productCards.forEach((card) => {
-    const category = card.dataset.category || "all";
+    const category = (card.dataset.category || "all").toLowerCase();
     const title = card.querySelector("h3")?.textContent.toLowerCase() || "";
 
     const matchesCategory =
-      activeCategory === "all" || category === activeCategory;
+      activeCategory === "all" || category === activeCategory.toLowerCase();
     const matchesSearch = query === "" || title.includes(query);
 
     const wrapper = card.closest(".col-md-6") || card;
@@ -435,22 +453,36 @@ function showToast(message) {
 
 /* ==========================================================
    PRODUCT QUICK VIEW
+   Same re-runnable pattern as the swatches above — the button is
+   only appended to cards that don't already have one.
    ========================================================== */
-document.querySelectorAll(".product-card").forEach((card) => {
-  const icon = card.querySelector(".product-icon");
-  if (!icon) return;
+function wireUpQuickViewButtons() {
+  document.querySelectorAll(".product-card").forEach((card) => {
+    const icon = card.querySelector(".product-icon");
+    if (!icon || icon.querySelector(".quick-view-btn")) return;
 
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "quick-view-btn";
-  btn.textContent = "👁 Quick View";
-  icon.appendChild(btn);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "quick-view-btn";
+    btn.textContent = "👁 Quick View";
+    icon.appendChild(btn);
 
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openQuickView(card);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openQuickView(card);
+    });
   });
-});
+}
+
+wireUpQuickViewButtons();
+
+// Called by product.js after it finishes rendering cards fetched
+// from the API, so swatches / hover-swap / quick view all work on
+// cards that didn't exist yet when this file first ran.
+window.wireUpProductCards = function () {
+  wireUpColorSwatches();
+  wireUpQuickViewButtons();
+};
 
 const quickViewModal = new bootstrap.Modal(
   document.getElementById("quickViewModal"),
