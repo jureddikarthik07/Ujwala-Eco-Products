@@ -1,49 +1,71 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema(
-{
+const colorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+    },
+
+    image1: {
+        type: String,
+        required: true,
+    },
+
+    image2: {
+        type: String,
+        required: true,
+    },
+
+    hexCode: {
+        type: String,
+        required: true,
+    }
+});
+
+const productSchema = new mongoose.Schema({
+
+    name: {
+        type: String,
+        required: true,
     },
 
     description: {
         type: String,
-        required: true
+        required: true,
     },
 
     category: {
         type: String,
-        required: true
+        required: true,
     },
 
     price: {
         type: Number,
-        required: true
+        required: true,
     },
 
     stock: {
         type: Number,
-        default: 0
+        default: 0,
     },
 
-    images: [
-        {
-            type: String
-        }
-    ],
+    rating: {
+        type: Number,
+        default: 5,
+    },
 
-    colors: [
-        {
-            type: String
-        }
-    ],
+    reviews: {
+        type: Number,
+        default: 0,
+    },
 
     featured: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
+
+    colors: [colorSchema]
+
 },
 {
     timestamps: true

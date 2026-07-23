@@ -1,37 +1,88 @@
-const products = [
-  {
-    id: "stationery-pouch",
+const API_URL = "http://localhost:5000/api/products";
 
-    name: "Stationery Pouch Bag",
+async function loadProducts() {
 
-    category: "Pouch",
+    try {
 
-    price: 150,
+        const response = await fetch(API_URL);
 
-    description: "Eco-friendly stationery pouch made from premium jute.",
+        const data = await response.json();
 
-    rating: 5,
+        displayProducts(data.products);
 
-    reviews: 18,
+    }
 
-    colors: [
-      {
-        color: "Cream",
-        image1: "./assets/pencil-pouch/cream-pencil-pounch-1.png",
-        image2: "./assets/pencil-pouch/cream-pencil-pounch-2.png",
-      },
+    catch (error) {
 
-      {
-        color: "Brown",
-        image1: "./assets/pencil-pouch/brown-pencil-pounch-1.png",
-        image2: "./assets/pencil-pouch/brown-pencil-pounch-2.png",
-      },
+        console.error(error);
 
-      {
-        color: "Purple",
-        image1: "./assets/pencil-pouch/purple-pencil-pounch-1.png",
-        image2: "./assets/pencil-pouch/purple-pencil-pounch-2.png",
-      },
-    ],
-  },
-];
+    }
+
+}
+
+function displayProducts(products) {
+
+    const container = document.getElementById("products-container");
+
+    container.innerHTML = "";
+
+    products.forEach(product => {
+
+        const firstColor = product.colors[0];
+
+        const card = `
+        <div class="col-md-6 col-lg-4 reveal">
+
+            <div class="product-card p-4">
+
+                <div class="product-icon">
+
+                    <img
+                    src="./assets/pencil-pouch/${firstColor.image1}"
+                    class="product-img main-product-img">
+
+                </div>
+
+                <span class="mono d-block mb-2">
+
+                    ${product.category}
+
+                </span>
+
+                <h3 class="h5">
+
+                    ${product.name}
+
+                </h3>
+
+                <p>
+
+                    ${product.description}
+
+                </p>
+
+                <div class="mb-3">
+
+                    ₹${product.price}
+
+                </div>
+
+                <button
+                    class="btn btn-sm btn-gold">
+
+                    Add To Cart
+
+                </button>
+
+            </div>
+
+        </div>
+        `;
+
+        container.innerHTML += card;
+
+    });
+
+}
+
+loadProducts();
