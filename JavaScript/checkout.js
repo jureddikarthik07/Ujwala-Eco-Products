@@ -1,6 +1,6 @@
 // Change this to match the same value in cart.js — keeping both in sync
 // means the amount shown on the cart page matches what's charged here.
-const SHIPPING_COST = 0;
+const SHIPPING_COST = 49;
 
 // Load cart from localStorage
 let cart = [];
